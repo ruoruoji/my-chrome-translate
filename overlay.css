@@ -1,0 +1,219 @@
+/* overlay.css
+ * 双击翻译浮层样式（Shadow DOM 内部使用）
+ */
+
+:host {
+  all: initial;
+}
+
+.dtp-wrapper {
+  position: fixed;
+  max-width: 360px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  box-sizing: border-box;
+  transition: opacity 0.14s ease-out, transform 0.14s ease-out;
+  transform: translateY(0);
+}
+
+.dtp-wrapper.dtp-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dtp-overlay {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(15, 23, 42, 0.65);
+  padding: 12px 14px 12px;
+  min-width: 260px;
+}
+
+.dtp-theme-light {
+  background: #ffffff;
+  color: #111827;
+  border-color: rgba(148, 163, 184, 0.6);
+}
+
+.dtp-theme-dark {
+  background: #020617;
+  color: #e5e7eb;
+  border-color: rgba(15, 23, 42, 0.9);
+}
+
+.dtp-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.dtp-header-text {
+  flex: 1 1 auto;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dtp-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+
+.dtp-theme-light .dtp-close {
+  color: #6b7280;
+}
+
+.dtp-theme-dark .dtp-close {
+  color: #9ca3af;
+}
+
+.dtp-theme-light .dtp-close:hover {
+  background: rgba(15, 23, 42, 0.06);
+  color: #111827;
+}
+
+.dtp-theme-dark .dtp-close:hover {
+  background: rgba(148, 163, 184, 0.18);
+  color: #f9fafb;
+}
+
+.dtp-close:active {
+  transform: scale(0.96);
+}
+
+.dtp-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dtp-translation-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  margin-bottom: 2px;
+}
+
+.dtp-theme-light .dtp-translation-label {
+  color: #6b7280;
+}
+
+.dtp-theme-dark .dtp-translation-label {
+  color: #9ca3af;
+}
+
+.dtp-translation {
+  font-size: 13px;
+  color: inherit;
+  word-break: break-word;
+}
+
+.dtp-theme-dark .dtp-translation {
+  color: #e5e7eb;
+}
+
+.dtp-pronunciation {
+  display: flex;
+  align-items: center;
+  min-height: 16px;
+}
+
+.dtp-ipa {
+  font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.dtp-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.dtp-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 13px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.14s ease-out, box-shadow 0.14s ease-out,
+    transform 0.08s ease-out;
+}
+
+.dtp-theme-light .dtp-action-btn {
+  background-color: #f3f4f6;
+  color: #111827;
+  box-shadow: 0 2px 6px rgba(148, 163, 184, 0.5);
+}
+
+.dtp-theme-light .dtp-action-btn:hover {
+  background-color: #e5e7eb;
+  box-shadow: 0 3px 10px rgba(148, 163, 184, 0.7);
+}
+
+.dtp-theme-dark .dtp-action-btn {
+  background-color: rgba(31, 41, 55, 0.9);
+  color: #f9fafb;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+}
+
+.dtp-theme-dark .dtp-action-btn:hover {
+  background-color: rgba(55, 65, 81, 0.95);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.85);
+}
+
+.dtp-action-btn:active {
+  transform: translateY(1px);
+}
+
+.dtp-action-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+  box-shadow: none;
+}
+
+.dtp-provider {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.dtp-theme-dark .dtp-provider {
+  color: #9ca3af;
+}
+
+.dtp-error {
+  font-size: 12px;
+  color: #b91c1c;
+}
+
+/* 小屏幕适配 */
+@media (max-width: 480px) {
+  .dtp-wrapper {
+    max-width: calc(100vw - 24px);
+  }
+}

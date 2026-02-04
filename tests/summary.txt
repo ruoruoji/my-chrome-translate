@@ -1,0 +1,98 @@
+接口连通性与功能验证摘要（执行环境：curl，超时 20s，重试 1 次）
+
+一、LibreTranslate（POST https://libretranslate.de/translate）
+用例 A："hello world"
+- HTTP 状态码：301
+- 响应体：文件 libre_A.json 为空（未看到 JSON 数据）
+- 关键字段：未能验证 translatedText / translation / translated_text（响应体缺失）
+- 结论：仅从本次 curl 连通性测试看，服务可达，但未返回预期的 200 + JSON 翻译结果，判定为「不符合预期」。可能原因包括：该公共实例对当前 URL 做了 301 重定向，curl 未加 -L 未自动跟随；在浏览器环境下使用 fetch 时通常会自动跟随重定向，实际扩展内调用不一定受此问题影响。
+
+用例 B："language learning"
+- HTTP 状态码：301
+- 响应体：文件 libre_B.json 为空（未看到 JSON 数据）
+- 关键字段：未能验证 translatedText / translation / translated_text（响应体缺失）
+- 结论：症状同用例 A，判定为「不符合预期」。如需在命令行环境验证，可考虑改用 curl -L 以跟随重定向后再复测。
+
+二、MyMemory（GET https://api.mymemory.translated.net/get?q=...&langpair=en|zh-CN）
+
+用例 A："hello world"（文件：mymemory_A.json）
+- HTTP 状态码：200
+- 关键字段：
+  - responseData.translatedText = "你好世界"
+  - matches[0].translation = "你好世界"
+- 功能验证：两处均给出合理的中文翻译片段，与预期含义一致。
+- 结论：连通性与功能均「符合预期」。
+
+用例 B："language learning"（文件：mymemory_B.json）
+- HTTP 状态码：200
+- 关键字段：
+  - responseData.translatedText = "语言学习"
+  - matches[0].translation = "语言学习"
+- 功能验证：返回翻译语义正确，能用于前端展示。
+- 结论：连通性与功能均「符合预期」。
+
+限流 / 稳定性观察：
+- 本次对 MyMemory 共发起 2 次请求，均在超时时间内返回 200，未见 429 或错误提示，暂未观察到明显限流或不稳定现象。但未进行高频压测，持续高并发场景下稳定性仍需后续观察。
+
+三、Free Dictionary API（GET https://api.dictionaryapi.dev/api/v2/entries/en/<word>）
+
+用例 A："pronunciation"（文件：dict_pronunciation.json）
+- HTTP 状态码：200
+- 数据结构：顶层为数组，长度 >= 1。
+- 关键字段：
+  - phonetics[0].text = "/pɹəˌnaʊn.siˈeɪ.ʃən/"（IPA 音标存在）
+  - phonetics[0].audio = "https://api.dictionaryapi.dev/media/pronunciations/en/pronunciation-us.mp3"（提供可用音频 URL）
+- 功能验证：可以从首个元素直接提取 IPA 与音频链接，满足字典展示与音频播放需求。
+- 结论：连通性与功能均「符合预期」。
+
+用例 B："language"（文件：dict_language.json）
+- HTTP 状态码：200
+- 数据结构：顶层为数组，包含多个词条。
+- 关键字段：
+  - 第一个元素 phonetics[0].text = "[ˈleɪŋɡwɪd͡ʒ]"（IPA 音标存在）
+  - 第一个元素 phonetics[0].audio = ""（为空字符串）
+  - 但同一元素组内 phonetics[1].audio = "https://api.dictionaryapi.dev/media/pronunciations/en/language-us.mp3"（存在有效音频 URL）
+- 功能验证：尽管 phonetics[0].audio 为空，但整体数组中可找到非空音频 URL，前端只要按数组扫描即可正常获取发音音频，IPA 也可直接从 phonetics[0].text 读取。
+- 结论：综合来看，能提供所需 IPA 与音频链接，判定为「基本符合预期」，需在实现中注意不要只依赖 phonetics[0].audio。
+
+限流 / 稳定性观察：
+- 本次对 Free Dictionary API 共发起 2 次请求，均返回 200，数据结构规范，无明显错误提示；暂未观察到限流或不稳定情况。
+
+四、整体结论与对扩展的影响
+- LibreTranslate：当前使用 curl 直接 POST 至 https://libretranslate.de/translate 得到 301 且响应体为空，本轮命令行测试不满足「200 + JSON 翻译字段」的用例预期。但服务本身可达，且在浏览器环境中通过 fetch 调用时一般会自动跟随重定向，实际扩展中的调用仍可能正常；建议后续在浏览器内再做一次端到端验证，并酌情在命令行工具中加入 -L 以对齐行为。
+- MyMemory：两条测试用例均返回 200，且 responseData.translatedText 与 matches[0].translation 字段存在且语义正确，满足备用翻译 Provider 的要求。
+- Free Dictionary API：在两个测试单词上均返回 200 与结构化 JSON 数据，可提取 IPA 与音频链接，其中 "language" 一词的首元素音频字段为空，但数组内存在其它有效音频，调用方实现时需做容错处理。
+
+综合评估：
+- 对于 Chrome 扩展当前的多 Provider 策略：当 LibreTranslate 在实际环境中无法提供有效 JSON 时，MyMemory 可以作为可靠回退；Free Dictionary API 在本轮测试中表现稳定，能够支撑单词音标与音频获取需求。
+- 本轮测试聚焦接口连通性和字段结构验证，并未重新覆盖扩展完整交互流程；建议在浏览器中再做一次端到端回归测试，以确认实际用户体验。
+五、LibreTranslate 重定向与备用域名补充测试
+
+1）使用 curl -L 访问 https://libretranslate.de/translate
+用例 A："hello world"（文件：libre_A_follow.json）
+- HTTP 状态码：200
+- 响应体：为 HTML 页面（站点前端），非 JSON 数据。
+- 关键字段：未发现 translatedText / translation / translated_text。
+- 结论：跟随重定向后虽然返回 200，但最终落到站点 HTML 页面，无法直接作为 JSON 翻译 API 使用，命令行测试仍视为「不符合预期」。
+
+用例 B："language learning"（文件：libre_B_follow.json）
+- HTTP 状态码：200
+- 响应体：为 HTML 页面（站点前端），非 JSON 数据。
+- 关键字段：未发现 translatedText / translation / translated_text。
+- 结论：行为与用例 A 一致，同样判定为「不符合预期」。
+
+2）备用域名 https://libretranslate.com/translate
+用例 A："hello world"（文件：libre_A_com.json）
+- HTTP 状态码：400
+- 响应体：{"error":"Visit https://portal.libretranslate.com to get an API key"}
+- 关键字段：未发现 translatedText / translation / translated_text，仅有 error 字段。
+- 结论：备用域名当前要求提供 API key，未带 key 时返回 400 + error，不能作为匿名免费翻译接口直接使用，本次用例判定为「不符合预期」。
+
+用例 B："language learning"（文件：libre_B_com.json）
+- HTTP 状态码：400
+- 响应体：{"error":"Visit https://portal.libretranslate.com to get an API key"}
+- 关键字段：未发现 translatedText / translation / translated_text，仅有 error 字段。
+- 结论：行为与用例 A 一致，同样判定为「不符合预期」。
+
+补充说明：
+- 综合本轮补充测试，LibreTranslate.de 在命令行加 -L 跟随重定向后会返回站点 HTML 页面，而非 JSON API 输出；LibreTranslate.com/translate 在未提供 API key 时统一返回 400 与 error 文本。对于当前 Chrome 扩展，仍建议在浏览器内通过 fetch 做一次端到端验证，并继续依赖 MyMemory 作为稳定回退 Provider，以保障实际用户体验。

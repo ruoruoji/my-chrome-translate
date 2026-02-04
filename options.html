@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>双击翻译设置</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        font-size: 14px;
+        margin: 16px;
+        color: #111827;
+      }
+      h1 {
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+      .section {
+        margin-bottom: 16px;
+      }
+      label {
+        display: block;
+        margin-bottom: 4px;
+        font-weight: 600;
+      }
+      select,
+      input[type="range"] {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .inline {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      #status {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #059669;
+      }
+      button {
+        padding: 6px 12px;
+        border-radius: 4px;
+        border: none;
+        background: #2563eb;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #1d4ed8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>双击翻译设置</h1>
+
+    <div class="section">
+      <label for="provider">翻译 Provider</label>
+      <select id="provider">
+        <option value="auto">自动（优先 LibreTranslate，失败回退 MyMemory）</option>
+        <option value="libre">仅 LibreTranslate</option>
+        <option value="mymemory">仅 MyMemory</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <label for="theme">主题</label>
+      <select id="theme">
+        <option value="auto">自动（跟随系统）</option>
+        <option value="light">浅色</option>
+        <option value="dark">深色</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <label for="ttsRate">TTS 语速（0.8 ~ 1.2）</label>
+      <div class="inline">
+        <input type="range" id="ttsRate" min="0.8" max="1.2" step="0.1" />
+        <span id="ttsRateValue"></span>
+      </div>
+    </div>
+
+    <div class="section">
+      <label for="ttsVoice">TTS 英语音色偏好</label>
+      <select id="ttsVoice">
+        <option value="auto">自动选择英文音色</option>
+        <option value="en-US">优先美式英语（en-US）</option>
+        <option value="en-GB">优先英式英语（en-GB）</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <label for="showPronounce">显示发音按钮（单词）</label>
+      <div class="inline">
+        <input type="checkbox" id="showPronounce" />
+        <span>在查询单词时显示“播放”按钮</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <label for="autoPopupOnSelect">划词自动弹出</label>
+      <div class="inline">
+        <input type="checkbox" id="autoPopupOnSelect" />
+        <span>选中英文文本后自动弹出翻译浮层</span>
+      </div>
+    </div>
+
+    <button id="save">保存设置</button>
+    <div id="status"></div>
+
+    <script src="options.js"></script>
+  </body>
+</html>

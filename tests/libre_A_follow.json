@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="alternate" hreflang="en" href="https://libretranslate.com" />
+	<link rel="alternate" hreflang="ko" href="https://ko.libretranslate.com" />
+	<link rel="alternate" hreflang="eu" href="https://eu.libretranslate.com" />
+	<link rel="alternate" hreflang="hu" href="https://hu.libretranslate.com" />
+	<link rel="alternate" hreflang="ga" href="https://ga.libretranslate.com" />
+	<link rel="alternate" hreflang="pt" href="https://pt.libretranslate.com" />
+	<link rel="alternate" hreflang="bg" href="https://bg.libretranslate.com" />
+	<link rel="alternate" hreflang="cs" href="https://cs.libretranslate.com" />
+	<link rel="alternate" hreflang="es" href="https://es.libretranslate.com" />
+	<link rel="alternate" hreflang="nl" href="https://nl.libretranslate.com" />
+	<link rel="alternate" hreflang="de" href="https://de.libretranslate.com" />
+	<link rel="alternate" hreflang="zh" href="https://zh.libretranslate.com" />
+	<link rel="alternate" hreflang="ru" href="https://ru.libretranslate.com" />
+	<link rel="alternate" hreflang="gd" href="https://gd.libretranslate.com" />
+	<link rel="alternate" hreflang="ca" href="https://ca.libretranslate.com" />
+	<link rel="alternate" hreflang="ja" href="https://ja.libretranslate.com" />
+	<link rel="alternate" hreflang="eo" href="https://eo.libretranslate.com" />
+	<link rel="alternate" hreflang="kab" href="https://kab.libretranslate.com" />
+	<link rel="alternate" hreflang="fr" href="https://fr.libretranslate.com" />
+	<link rel="alternate" hreflang="it" href="https://it.libretranslate.com" />
+	<link rel="alternate" hreflang="uk" href="https://uk.libretranslate.com" />
+	
+	
+	<title>LibreTranslate - Freie und quelloffene API für maschinelle Übersetzung 🌐</title>
+	<meta name="description" content="Freie und quelloffene API für maschinelle Übersetzung. Kostenlos zum download, offline-fähig und einfach einzurichten. Betreiben Sie Ihren eigenen API-Server in nur wenigen Minuten.">
+	<meta name="keywords" content="Übersetzung,API">
+	
+
+	<link rel="shortcut icon" href="/static/favicon.ico">
+
+	<link rel="preload" href="/static/icon.svg" as="image" />
+	<link rel="preload" href="/static/js/vue%402.js" as="script">
+	<link rel="preload" href="/static/js/materialize.min.js" as="script">
+	<link rel="preload" href="/static/js/prism.min.js" as="script">
+	<link rel="preload" href="js/app.js?v=1.8.3" as="script">
+
+	<link rel="preload" href="/static/css/materialize.min.css" as="style"/>
+	<link rel="preload" href="/static/css/material-icons.css" as="style"/>
+	<link rel="preload" href="/static/css/prism.min.css" as="style"/>
+	<link rel="preload" href="/static/css/main.css?v=1.8.3" as="style"/>
+
+	<meta property="og:title" content="LibreTranslate - Freie und quelloffene API für maschinelle Übersetzung" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://libretranslate.com" />
+	<meta property="og:image" content="https://user-images.githubusercontent.com/1951843/102724116-32a6df00-42db-11eb-8cc0-129ab39cdfb5.png" />
+	<meta property="og:description" name="description" class="swiftype" content="Freie und quelloffene API für maschinelle Übersetzung. Kostenlos zum download, offline-fähig und einfach einzurichten. Betreiben Sie Ihren eigenen API-Server in nur wenigen Minuten."/>
+
+	<script src="/static/js/vue%402.js"></script>
+
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="/static/css/materialize.min.css">
+	<link rel="stylesheet" href="/static/css/material-icons.css" />
+	<link rel="stylesheet" href="/static/css/prism.min.css" />
+	<link rel="stylesheet" href="/static/css/main.css?v=1.8.3" />
+
+	<meta name="color-scheme" content="light dark">
+</head>
+
+<body>
+	<header>
+		<nav role="navigation">
+			<div class="nav-wrapper container">
+				<button data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></button>
+				<a id="logo-container" href="/" class="brand-logo noline">
+					<img src="/static/icon.svg" alt="" class="logo">
+					<span>LibreTranslate</span>
+				</a>
+				<ul id="nav" class="right hide-on-med-and-down top-nav position-relative">
+					
+					
+					
+					<li><a href="https://docs.libretranslate.com">API-Doku</a></li>
+					
+					
+					<li><a href="https://portal.libretranslate.com">API-Schlüssel erhalten</a></li>
+					
+					<li><a href="https://github.com/LibreTranslate/LibreTranslate" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+					
+					<li><a class="noline" href="javascript:setApiKey()" title="API-Schlüssel festlegen" aria-label="API-Schlüssel festlegen"><i class="material-icons">vpn_key</i></a></li>
+					
+					<li class="change-language"><a class="noline" href="javascript:void(0)" title="Sprache ändern"><i class="material-icons">language</i></a>
+					</li>
+					<li class="locale-panel">
+						<select id="locales" onchange="changeLocale(this)">
+							<option value="eu" >Basque</option><option value="bg" >Bulgarisch</option><option value="zh" >Chinesisch</option><option value="de" selected>Deutsch</option><option value="en" >Englisch</option><option value="eo" >Esperanto</option><option value="fr" >Französisch</option><option value="ga" >Irisch</option><option value="it" >Italienisch</option><option value="ja" >Japanisch</option><option value="kab" >Kabyle</option><option value="ca" >Katalanisch</option><option value="ko" >Koreanisch</option><option value="nl" >Niederländisch</option><option value="pt" >Portugiesisch</option><option value="ru" >Russisch</option><option value="gd" >Scottish gaelic</option><option value="es" >Spanisch</option><option value="cs" >Tschechisch</option><option value="uk" >Ukrainisch</option><option value="hu" >Ungarisch</option>
+						</select>
+						<a href="https://hosted.weblate.org/projects/libretranslate/app/de/">Bearbeiten<i class="material-icons">create</i></a>
+					</li>
+					<li class="change-theme"><a class="noline" href="javascript:toggleColorScheme()" title="Dunkler/Lichtmodus"><i class="material-icons">lightbulb_outline</i></a>
+					</li>
+					
+				</ul>
+				<ul id="nav-mobile" class="sidenav">
+					
+					
+					<li><a href="https://docs.libretranslate.com">API-Doku</a></li>
+					
+					
+					<li><a href="https://portal.libretranslate.com">API-Schlüssel erhalten</a></li>
+					
+					<li><a href="https://github.com/LibreTranslate/LibreTranslate" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+					
+					<li><a class="noline" href="javascript:setApiKey()" title="API-Schlüssel festlegen" aria-label="API-Schlüssel festlegen"><i class="material-icons">vpn_key</i></a></li>
+					
+					<li class="change-language"><a class="noline" href="javascript:void(0)" title="Sprache ändern"><i class="material-icons">language</i></a>
+					</li>
+					<li class="locale-panel">
+						<select id="locales" onchange="changeLocale(this)">
+							<option value="eu" >Basque</option><option value="bg" >Bulgarisch</option><option value="zh" >Chinesisch</option><option value="de" selected>Deutsch</option><option value="en" >Englisch</option><option value="eo" >Esperanto</option><option value="fr" >Französisch</option><option value="ga" >Irisch</option><option value="it" >Italienisch</option><option value="ja" >Japanisch</option><option value="kab" >Kabyle</option><option value="ca" >Katalanisch</option><option value="ko" >Koreanisch</option><option value="nl" >Niederländisch</option><option value="pt" >Portugiesisch</option><option value="ru" >Russisch</option><option value="gd" >Scottish gaelic</option><option value="es" >Spanisch</option><option value="cs" >Tschechisch</option><option value="uk" >Ukrainisch</option><option value="hu" >Ungarisch</option>
+						</select>
+						<a href="https://hosted.weblate.org/projects/libretranslate/app/de/">Bearbeiten<i class="material-icons">create</i></a>
+					</li>
+					<li class="change-theme"><a class="noline" href="javascript:toggleColorScheme()" title="Dunkler/Lichtmodus"><i class="material-icons">lightbulb_outline</i></a>
+					</li>
+					
+				</ul>
+				<script>
+					var localeLinks = {
+						"en": "https://libretranslate.com",
+						"ko": "https://ko.libretranslate.com",
+						"eu": "https://eu.libretranslate.com",
+						"hu": "https://hu.libretranslate.com",
+						"ga": "https://ga.libretranslate.com",
+						"pt": "https://pt.libretranslate.com",
+						"bg": "https://bg.libretranslate.com",
+						"cs": "https://cs.libretranslate.com",
+						"es": "https://es.libretranslate.com",
+						"nl": "https://nl.libretranslate.com",
+						"de": "https://de.libretranslate.com",
+						"zh": "https://zh.libretranslate.com",
+						"ru": "https://ru.libretranslate.com",
+						"gd": "https://gd.libretranslate.com",
+						"ca": "https://ca.libretranslate.com",
+						"ja": "https://ja.libretranslate.com",
+						"eo": "https://eo.libretranslate.com",
+						"kab": "https://kab.libretranslate.com",
+						"fr": "https://fr.libretranslate.com",
+						"it": "https://it.libretranslate.com",
+						"uk": "https://uk.libretranslate.com"
+						
+					};
+
+					function changeLocale(slt){
+						var lang = slt.value;
+						if (localeLinks[lang]) location.href = localeLinks[lang];
+						else location.href = '?lang=' + slt.value;
+					}
+
+					var btnChangeLangs = document.getElementsByClassName("change-language");
+					var localePanels = document.getElementsByClassName("locale-panel");
+
+					for (var i = 0; i < btnChangeLangs.length; i++){
+						(function(btn){
+							btn.addEventListener('click', function(e){
+								e.stopPropagation();
+								btn.classList.toggle('clicked');
+							});
+						})(btnChangeLangs[i]);
+					}
+					for (var i = 0; i < localePanels.length; i++){
+						localePanels[i].addEventListener('click', function(e){
+							e.stopPropagation();
+						});
+					}
+					document.addEventListener('click', function(){
+						for (var i = 0; i < btnChangeLangs.length; i++){
+							btnChangeLangs[i].classList.remove('clicked');
+						}
+					});
+				</script>
+			</div>
+		</nav>
+	</header>
+
+	<main id="app">
+	<div class="section no-pad-bot center" v-if="loading">
+		<div class="container">
+			<div class="row">
+				<div class="preloader-wrapper active">
+				<div class="spinner-layer spinner-blue-only">
+					<div class="circle-clipper left">
+					<div class="circle"></div>
+					</div><div class="gap-patch">
+					<div class="circle"></div>
+					</div><div class="circle-clipper right">
+					<div class="circle"></div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div v-else-if="error" class="component">
+		<div class="section no-pad-bot">
+			<div class="container">
+				<div class="row">
+					<div class="col s12 m12">
+						<div class="card horizontal">
+							<div class="card-stacked">
+							<div class="card-content">
+								<i class="material-icons">warning</i><p> [[ error ]]</p>
+							</div>
+							<div class="card-action">
+								<a href="#" @click="dismissError">Ablehnen</a>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div v-else class="component">
+		<div class="section no-pad-bot">
+			<div class="container">
+				<div class="row">
+					
+					<h3 class="header center">
+						
+						Übersetzungs-API
+						
+					</h3>
+					<div id="translation-type-btns" class="s12 center" v-if="filesTranslation === true">
+						<button type="button" class="btn btn-switch-type" @click="switchType('text')" :class="{'active': translationType === 'text'}" :disabled="disableInput">
+							<i aria-hidden="true" class="material-icons">title</i>
+							<span class="btn-text">Text übersetzen</span>
+						</button>
+						<button type="button" class="btn btn-switch-type" @click="switchType('files')" :class="{'active': translationType === 'files'}" :disabled="disableInput">
+							<i aria-hidden="true" class="material-icons">description</i>
+							<span class="btn-text">Dateien übersetzen</span>
+						</button>
+					</div>
+					<form id="translation-form" class="col s12">
+						<div class="row mb-0">
+							<div class="col s6 language-select">
+								<span id="sourceLangLabel">Übersetzen von</span>
+								<span v-if="detectedLangText !== ''">[[ detectedLangText ]]</span>
+								<select aria-labelledby="sourceLangLabel" class="browser-default" v-model="sourceLang" ref="sourceLangDropdown" @change="handleInput">
+									<template v-for="option in langs">
+										<option :value="option.code">[[ option.name ]]</option>
+									</template>
+								</select>
+							</div>
+
+							<div class="col s6 language-select">
+								<a href="javascript:void(0)" @click="swapLangs" class="btn-switch-language" aria-label="Quell- und Zielsprache vertauschen">
+									<i class="material-icons">swap_horiz</i>
+								</a>
+								<span id="targetLangLabel">Übersetzen in</span>
+								<select aria-labelledby="targetLangLabel" class="browser-default" v-model="targetLang" ref="targetLangDropdown" @change="handleInput">
+									<template v-for="option in targetLangs">
+										<option v-if="option.code !== 'auto'" :value="option.code">[[ option.name ]]</option>
+									</template>
+								</select>
+							</div>
+						</div>
+
+						<div class="row" v-if="translationType === 'text'">
+							<div class="input-field textarea-container col s12 m6">
+								<label for="textarea1" class="sr-only">
+									Text zum Übersetzen
+								</label>
+								<textarea id="textarea1" :maxLength="charactersLimit" v-model="inputText" @input="handleInput" ref="inputTextarea" dir="auto" :disabled="disableInput"></textarea>
+								<button class="btn-delete-text" title="Text löschen" aria-label="Text löschen" @click="deleteText">
+									<i class="material-icons">close</i>
+								</button>
+								<div class="characters-limit-container" v-if="charactersLimit !== -1">
+									<label>[[ inputText.length ]] / [[ charactersLimit ]]</label>
+								</div>
+							</div>
+							<div class="input-field textarea-container col s12 m6">
+								<label for="textarea2" class="sr-only">
+									Übersetzter Text
+								</label>
+								<textarea id="textarea2" v-model="translatedText" ref="translatedTextarea" dir="auto" v-bind:readonly="suggestions && !isSuggesting" :disabled="disableInput"></textarea>
+									<div class="actions">
+										<button v-if="suggestions && !loadingTranslation && inputText.length && !isSuggesting" class="btn-action" @click="suggestTranslation" aria-label="Übersetzung vorschlagen">
+											<i class="material-icons">edit</i>
+										</button>
+										<button v-if="suggestions && !loadingTranslation && inputText.length && isSuggesting" class="btn-action btn-blue" @click="closeSuggestTranslation">
+											<span>Abbrechen</span>
+										</button>
+										<button v-if="suggestions && !loadingTranslation && inputText.length && isSuggesting" :disabled="!canSendSuggestion" class="btn-action btn-blue" @click="sendSuggestion">
+											<span>Senden</span>
+										</button>
+										<button v-if="!isSuggesting" class="btn-action btn-copy-translated" @click="copyText">
+											<span>[[ copyTextLabel ]]</span> <i class="material-icons" aria-hidden="true">content_copy</i>
+										</button>
+									</div>
+								<div class="position-relative">
+									<div class="progress translate" v-if="loadingTranslation">
+										<div class="indeterminate"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" v-if="translationType === 'files'">
+							<div class="file-dropzone">
+								<div v-if="inputFile === false" class="dropzone-content">
+									<span>Unterstützte Dateiformate: [[ supportedFilesFormatFormatted ]]</span>
+									<form action="#">
+										<div class="file-field input-field">
+											<div class="btn">
+												<span id="fileLabel">Datei</span>
+												<input aria-labelledby="fileLabel" type="file" :accept="supportedFilesFormatFormatted" @change="handleInputFile" ref="fileInputRef">
+											</div>
+											<div class="file-path-wrapper hidden">
+												<input class="file-path validate" type="text">
+											</div>
+										</div>
+									</form>
+								</div>
+								<div v-if="inputFile !== false" class="dropzone-content">
+									<div class="card">
+										<div class="card-content">
+											<div class="row mb-0">
+												<div class="col s12">
+													[[ inputFile.name ]]
+													<button v-if="loadingFileTranslation !== true" @click="removeFile" class="btn-flat" aria-label="Datei entfernen">
+														<i class="material-icons">close</i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<button @click="translateFile" v-if="translatedFileUrl === false && loadingFileTranslation === false" class="btn">Übersetzen</button>
+									<a v-if="translatedFileUrl !== false" :href="translatedFileUrl" class="btn">Herunterladen</a>
+									<div class="progress" v-if="loadingFileTranslation">
+										<div class="indeterminate"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		
+		<div class="section no-pad-bot" v-if="translationType !== 'files'">
+			<div class="container">
+				<div class="row center">
+					<div class="col s12 m12">
+
+					<div class="row center code-row-wrapper">
+						<div class="col s12 m12 l6 left-align code-box">
+							<p class="mb-0">Anfrage</p>
+							<pre class="code mt-0"><code class="language-javascript" v-html="$options.filters.highlight(requestCode)">
+							</code></pre>
+						</div>
+						<div class="col s12 m12 l6 left-align code-box">
+							<p class="mb-0">Antwort</p>
+							<pre class="code mt-0"><code class="language-javascript" v-html="$options.filters.highlight(output)">
+							</code></pre>
+						</div>
+					</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="section no-pad-bot">
+			<div class="container">
+				<div class="row center">
+					<div class="col s12 m12">
+						<h3 class="header">Open-Source-API für maschinelle Übersetzung</h3>
+						<h4 class="header">Kostenlos zum download. Offline-fähig. Einfach einzurichten.</h4>
+						<div id="download-btn-wrapper">
+							<a id="download-btn" class="waves-effect waves-light btn btn-large teal darken-2" href="https://github.com/LibreTranslate/LibreTranslate" rel="noopener noreferrer">
+								<i aria-hidden="true" class="material-icons">cloud_download</i>
+								<span class="btn-text">Herunterladen</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	</main>
+
+	<footer class="page-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col l12 s12">
+					<h5 class="white-text">LibreTranslate <span style="font-size: 16px">v1.8.3</span></h5>
+					<p class="grey-text text-lighten-4">Freie und quelloffene API für maschinelle Übersetzung</p>
+					<p>Lizenz: <a class="grey-text text-lighten-4" href="https://www.gnu.org/licenses/agpl-3.0.en.html" rel="noopener noreferrer">AGPLv3</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright center">
+			<p class="white-text">
+				Mit ❤ gemacht von <a class="white-text" href="https://github.com/LibreTranslate/LibreTranslate/graphs/contributors" rel="noopener noreferrer">den LibreTranslate-Mitwirkenden</a> und betrieben mit <a class="white-text text-lighten-3" href="https://github.com/argosopentech/argos-translate/" rel="noopener noreferrer">Argos Translate</a>
+			</p>
+		</div>
+	</footer>
+
+	<script src="/static/js/materialize.min.js"></script>
+	<script>
+	// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
+	window.Prism = window.Prism || {};
+	window.Prism.manual = true;
+	// @license-end
+	</script>
+	<script src="/static/js/prism.min.js"></script>
+	<script src="js/app.js?v=1.8.3"></script>
+</body>
+</html>
