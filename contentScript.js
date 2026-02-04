@@ -189,9 +189,13 @@ function getPreferredVoice() {
 }
 
 function handlePlayClick() {
-  if (!currentData || !currentData.text) return;
-
-  const text = currentData.text;
+  let text =
+    currentData && currentData.text ? currentData.text : "";
+  const selectionText = getCurrentSelectionText();
+  if (!text && selectionText) {
+    text = selectionText;
+  }
+  if (!text) return;
 
   // 针对全大写缩略词（2~10 位），按字母逐个朗读
   let speakText = text;
@@ -274,7 +278,7 @@ function ensureOverlayCreated() {
   hostElement.style.top = "0";
   hostElement.style.left = "0";
   hostElement.style.zIndex = "2147483647"; // 最高层级，尽量不被页面覆盖
-  hostElement.style.pointerEvents = "none"; // 由内部元素决定是否可点击
+  hostElement.style.pointerEvents = "auto";
 
   shadowRoot = hostElement.attachShadow({ mode: "open" });
 
@@ -334,8 +338,9 @@ function ensureOverlayCreated() {
 
   // 复制按钮
   ui.btnCopy.addEventListener("click", () => {
-    if (!currentData.text) return;
-    const text = currentData.text;
+    const text =
+      currentData && currentData.text ? currentData.text : getCurrentSelectionText();
+    if (!text) return;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).catch((err) => {
         console.warn("使用 Clipboard API 复制失败，尝试回退方法", err);
@@ -886,6 +891,20 @@ function triggerTranslateFromSelection(anchorEvent) {
   }
 }
 
+<<<<<<< HEAD
+=======
+function getCurrentSelectionText() {
+  try {
+    const selection = window.getSelection();
+    if (!selection) return "";
+    const text = selection.toString();
+    return text ? text.trim() : "";
+  } catch (e) {
+    return "";
+  }
+}
+
+>>>>>>> 476e37a (初始化)
 function isRectAlmostSame(a, b, threshold) {
   if (!a || !b) return false;
 
